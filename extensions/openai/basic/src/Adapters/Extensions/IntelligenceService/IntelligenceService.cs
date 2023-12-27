@@ -2,6 +2,13 @@ using System.Collections.Generic;
 using Azure;
 using Azure.AI.OpenAI;
 
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.Json;
+using Azure;
+using Azure.AI.OpenAI;
+
+
 
 namespace DevPrime.Extensions.IntelligenceService;
 public class IntelligenceService : DevPrimeExtensions, IIntelligenceService
@@ -37,6 +44,7 @@ public class IntelligenceService : DevPrimeExtensions, IIntelligenceService
                        NucleusSamplingFactor = (float)0.95,
                        FrequencyPenalty = 0,
                        PresencePenalty = 0,
+                       DeploymentName= DeploymentModel
                    };
 
 
@@ -48,7 +56,7 @@ public class IntelligenceService : DevPrimeExtensions, IIntelligenceService
                    chatCompletionsOptions.Messages.Add(new ChatMessage(ChatRole.User, prompt));
 
                    // Prepare for interaction
-                   Response<ChatCompletions> response = openAiClient.GetChatCompletions(DeploymentModel, chatCompletionsOptions);
+                   Response<ChatCompletions> response = openAiClient.GetChatCompletions(chatCompletionsOptions);
 
                    //OpenAI Result
                    var airesponse = response.GetRawResponse().Content.ToString();
