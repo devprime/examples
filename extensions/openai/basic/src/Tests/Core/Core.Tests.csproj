@@ -35,7 +35,7 @@
     <ProjectReference Include="..\..\Core\Domain\Domain.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="devprime.stack.app" Version="8.0.0" />
-    <PackageReference Include="devprime.stack.test" Version="8.0.0" />
+    <PackageReference Include="devprime.stack.app" Version="8.0.1" />
+    <PackageReference Include="devprime.stack.test" Version="8.0.1" />
   </ItemGroup>
 </Project>

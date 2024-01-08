@@ -2,14 +2,6 @@ using System.Collections.Generic;
 using Azure;
 using Azure.AI.OpenAI;
 
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Json;
-using Azure;
-using Azure.AI.OpenAI;
-
-
-
 namespace DevPrime.Extensions.IntelligenceService;
 public class IntelligenceService : DevPrimeExtensions, IIntelligenceService
 {
@@ -30,43 +22,45 @@ public class IntelligenceService : DevPrimeExtensions, IIntelligenceService
 
 
         return Dp.Pipeline(ExecuteResult: () =>
-               {
+        {
 
-                  Dp.Observability.Log("Starting OpenAI");
+            Dp.Observability.Log("Starting OpenAI");
 
-                   // Prepare AI Configurations
-                   var chatCompletionsOptions = new ChatCompletionsOptions()
-                   {
-                       Messages =      {
-                                       },
-                       Temperature = (float)0.7,
-                       MaxTokens = 800,
-                       NucleusSamplingFactor = (float)0.95,
-                       FrequencyPenalty = 0,
-                       PresencePenalty = 0,
-                       DeploymentName= DeploymentModel
-                   };
+            // Prepare AI Configurations
+            var chatCompletionsOptions = new ChatCompletionsOptions()
+            {
+                Messages =      {
+                                },
+                Temperature = (float)0.7,
+                MaxTokens = 800,
+                NucleusSamplingFactor = (float)0.95,
+                FrequencyPenalty = 0,
+                PresencePenalty = 0,
+                DeploymentName = DeploymentModel
+            };
 
 
-                   // Creating OpenAI Client
-                   var openAiClient = new OpenAIClient(new System.Uri(URL), new AzureKeyCredential(Credential));
+            // Creating OpenAI Client
+            var openAiClient = new OpenAIClient(new System.Uri(URL), new AzureKeyCredential(Credential));
 
-                   // Add prompt to conversation (hatRole.System / 
-                   // ChatRole.User / ChatRole.Assistant)                   
-                   chatCompletionsOptions.Messages.Add(new ChatMessage(ChatRole.User, prompt));
+            // Add prompt to conversation 
+            //ChatRequestSystemMessage / ChatRequestUserMessage / ChatRequestAssistantMessage     
 
-                   // Prepare for interaction
-                   Response<ChatCompletions> response = openAiClient.GetChatCompletions(chatCompletionsOptions);
+            chatCompletionsOptions.Messages.Add(new ChatRequestUserMessage(prompt));
+           
 
-                   //OpenAI Result
-                   var airesponse = response.GetRawResponse().Content.ToString();
-                   var root = System.Text.Json.JsonSerializer.Deserialize<Root>(airesponse);
-                   Message message = root.choices[0].message;
-                   var airesult = message.content;
+            // Prepare for interaction
+            Response<ChatCompletions> response = openAiClient.GetChatCompletions (chatCompletionsOptions);
 
-                   Dp.Observability.Log("Finalizing OpenAI");
-                   return airesult;
-               });
+            //OpenAI Result
+            var airesponse = response.GetRawResponse().Content.ToString();
+            var root = System.Text.Json.JsonSerializer.Deserialize<Root>(airesponse);
+            Message message = root.choices[0].message;
+            var airesult = message.content;
+
+            Dp.Observability.Log("Finalizing OpenAI");
+            return airesult;
+        });
 
     }
 
