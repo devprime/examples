@@ -8,6 +8,6 @@
     <ProjectGuid>{9e1c7307-5701-4240-a4fa-71a64938ed9e}</ProjectGuid>
   </PropertyGroup>	
   <ItemGroup>
-    <PackageReference Include="devprime.stack.security" Version="8.0.1" />
+    <PackageReference Include="devprime.stack.security" Version="8.0.2" />
   </ItemGroup>
 </Project>

@@ -7,8 +7,8 @@
     <ProjectGuid>{9b9aad50-27bf-4548-b991-4984b6d02b58}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.12" />
-    <PackageReference Include="devprime.stack.extensions" Version="8.0.1" />
+    <PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.13" />
+    <PackageReference Include="devprime.stack.extensions" Version="8.0.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Application\Application.csproj" />

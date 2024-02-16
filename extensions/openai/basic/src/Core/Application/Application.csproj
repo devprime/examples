@@ -8,7 +8,7 @@
       <ProjectGuid>{1ebcdb06-5294-4b06-9c45-1a8d299278d1}</ProjectGuid>
     </PropertyGroup>		
 	<ItemGroup>
-    <PackageReference Include="devprime.stack.foundation" Version="8.0.1" />
+    <PackageReference Include="devprime.stack.foundation" Version="8.0.2" />
   	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Domain\Domain.csproj" />
