@@ -13,6 +13,6 @@
       <ProjectGuid>{efd511d9-69d4-4146-ab26-331771d9775e}</ProjectGuid>
     </PropertyGroup>	
 	<ItemGroup>
-    <PackageReference Include="devprime.stack.observability" Version="8.0.2" />
+    <PackageReference Include="devprime.stack.observability" Version="8.0.3" />
 	</ItemGroup>
 </Project>
