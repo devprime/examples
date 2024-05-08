@@ -1,10 +1,11 @@
-# examples
-Projects with examples using Devprime
+# Devprime Documentation
+This repository contains implementation examples provided in the [Devprime platform](https://devprime.io) documentation for use by developers with active access to the platform.
 
 
-# For more information
-[Devprime Exemples](https://docs.devprime.io/examples/)
+# Samples
+Access the [documentation](https://docs.devprime.io) and consult the available [examples](https://docs.devprime.io/examples/) listed:
+- Basic / (Azure OpenAI + OpenAI)
 
 
-### LEGAL
+### LEGAL INFORMATION
 This code example is the property of Devprime. All rights reserved.
