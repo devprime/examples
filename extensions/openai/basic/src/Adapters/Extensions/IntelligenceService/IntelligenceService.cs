@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure;
 using Azure.AI.OpenAI;
+using ServiceStack;
 
 namespace DevPrime.Extensions.IntelligenceService
 {
@@ -9,15 +12,18 @@ namespace DevPrime.Extensions.IntelligenceService
     {
         // Private properties to store credentials and intelligence service configurations
         private string Credential { get; set; }
-        private string URL { get; set; }
+        private string Url { get; set; }
         private string DeploymentModel { get; set; }
+        private string Platform { get; set; }
+
 
         // Constructor initializing properties based on DpExtensions settings
         public IntelligenceService(IDpExtensions dp) : base(dp)
         {
             Credential = Dp.Settings.Default("ai.credential");
-            URL = Dp.Settings.Default("ai.url");
+            Url = Dp.Settings.Default("ai.url");
             DeploymentModel = Dp.Settings.Default("ai.deploymentmodel");
+            Platform = ValidatePlatformSetting(Dp.Settings.Default("ai.platform") ?? "azure");
         }
 
         // Method to start a conversation with the AI service
@@ -32,7 +38,7 @@ namespace DevPrime.Extensions.IntelligenceService
                 // Settings for interacting with OpenAI service
                 var chatCompletionsOptions = new ChatCompletionsOptions()
                 {
-                    
+
                     Temperature = (float)0.7,
                     MaxTokens = 800,
                     NucleusSamplingFactor = (float)0.95,
@@ -42,7 +48,14 @@ namespace DevPrime.Extensions.IntelligenceService
                 };
 
                 // Creating OpenAI client with provided credentials
-                var openAiClient = new OpenAIClient(new System.Uri(URL), new AzureKeyCredential(Credential));
+                //var openAiClient = new OpenAIClient(new System.Uri(URL), new AzureKeyCredential(Credential));
+
+                var openAiClient = Platform == "azure" ?
+                new OpenAIClient(new System.Uri(Url), new AzureKeyCredential(Credential)) :
+                new OpenAIClient(Credential);
+
+
+                Dp.Observability.Log($"Starting OpenAI using platform {Platform}");
 
                 // Adding user's message to the conversation
                 // ChatRequestSystemMessage / ChatRequestUserMessage / ChatRequestAssistantMessage  
@@ -109,6 +122,18 @@ namespace DevPrime.Extensions.IntelligenceService
             public List<PromptFilterResults> prompt_filter_results { get; set; }
             public List<Choice> choices { get; set; }
             public Usage usage { get; set; }
+        }
+
+        private string ValidatePlatformSetting(string setting)
+        {
+            Dp.Observability.Log($"[Extensions]ValidatePlatformSetting:{setting}");
+            var platform = setting.ToLower();
+            if (platform != "azure" && platform != "openai")
+            {
+                Dp.Observability.Log($"[Extensions]ERROR: Platform must be either 'azure' or 'openai'.");
+                throw new System.Exception("Platform must be either 'azure' or 'openai'.");
+            }
+            return platform;
         }
     }
 }
