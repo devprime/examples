@@ -4,7 +4,8 @@ This repository contains implementation examples provided in the [Devprime platf
 
 # Samples
 Access the [documentation](https://docs.devprime.io) and consult the available [examples](https://docs.devprime.io/examples/) listed:
-- Basic / (Azure OpenAI + OpenAI)
+- Extensions
+  - [OpenAI](https://docs.devprime.io/examples/extensions/openai/)
 
 
 ### LEGAL INFORMATION
